@@ -3,12 +3,14 @@ import axios from 'axios'
 
 const Show_User_Attendance = () => {
     
+   
     var user_records=[];
     async function getData(){
     try {
         const response=await axios.get("http://localhost:5000/api/attendance/getAttendance")
         if(response.data.success)
             {
+                
                user_records=response.data.records
                console.log(user_records)
             }
