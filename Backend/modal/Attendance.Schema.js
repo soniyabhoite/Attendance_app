@@ -3,12 +3,13 @@ import mongoose,{Schema} from "mongoose";
 var attendanceSchema=new Schema({
 
    sign_in_date:{
-             type:String,
-             required:true
+             type:Date,
+             required:false,
+             default:() => new Date().toISOString().split('T')[0]
       },
       sign_in_time:{
         type:String,
-        required:true
+        required:false
 
       },
       sign_out_time:{
@@ -16,9 +17,21 @@ var attendanceSchema=new Schema({
         required:false
 
       },
+      sign_in_status:{
+        type:String,
+        required:true
+    
+
+      },
+       is_logged:{
+        type:Boolean,
+        required:true,
+        default:false
+       },
       user:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+        ref:'User',
+        required:true
       }
 
 })
