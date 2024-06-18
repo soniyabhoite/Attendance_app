@@ -28,7 +28,7 @@ export const saveAttendance=async (req,res)=>{
 export const getAttendance=async (req,res)=>{
     try {
 
-        var allRecords=await AttendanceSchema.find()
+        const allRecords=await AttendanceSchema.find({})
         if(!allRecords)
             {
                 return res.send("records not exists")
@@ -40,3 +40,59 @@ export const getAttendance=async (req,res)=>{
     }
 
 }
+
+
+// export const getAttendanceByUser = async (req, res) => {
+//     try {
+//         console.log("hiii")
+//       const { userId } = req.body;
+//       console.log(userId,"userId")
+//       const products = await ProductSchema.find({ user: userId }).populate(
+//         "user"
+//       );
+//       res.json({ success: true, products });
+//     } catch (error) {
+//       console.log(error);
+//       return res.json({ success: false, error });
+//     }
+//   };
+
+
+//   export const editAttendance=async(req,res)=>{
+//     const { userId, productData } = req.body;
+//     console.log(userId, productData);
+//     try
+//     {
+  
+//       const product = await ProductSchema.findByIdAndUpdate(
+//        {_id:productData._id},
+//        {
+//         $set:{
+//               name:productData.name,
+//               image:productData.image,
+//               category:productData.category,
+//               price:productData.price,
+//               quantity:productData.quantity
+  
+//         }
+//       },{
+//         new:true,
+//         useFindAndModify:false
+//       });
+//       console.log(product)
+//       if (!product) {
+//         return res.json({ success: false, message: "Product not found" });
+//       }
+//       console.log(product, "product");
+//       return res.json({
+//         success: true,
+//         message: "Product successfully updated.",
+//       });
+       
+//     }
+//       catch(error) {
+//           res.status(400).json({
+//             error: error
+//           });
+//         }
+//     };

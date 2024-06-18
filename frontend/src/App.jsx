@@ -23,7 +23,7 @@ function App() {
         <Route path='/attendance' element={<Attendance/>}/>
         <Route path='/get-attendance' element={<Show_User_Attendance/>}/>
         <Route path='/admin' element={<Admin_Page/>}/>
-
+        {/* <Route path='/single-product/:id' element={<SingleProduct/>} /> */}
       </Routes>
      
       
