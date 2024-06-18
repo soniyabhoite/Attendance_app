@@ -16,6 +16,7 @@ export const saveAttendance=async (req,res)=>{
 
 
             })
+            console.log(att)
             await att.save()
             return res.status(200).json({message:"Attendance marked successfully",success:true,userdata:att})
     } catch (error) {
@@ -42,57 +43,56 @@ export const getAttendance=async (req,res)=>{
 }
 
 
-// export const getAttendanceByUser = async (req, res) => {
-//     try {
-//         console.log("hiii")
-//       const { userId } = req.body;
-//       console.log(userId,"userId")
-//       const products = await ProductSchema.find({ user: userId }).populate(
-//         "user"
-//       );
-//       res.json({ success: true, products });
-//     } catch (error) {
-//       console.log(error);
-//       return res.json({ success: false, error });
-//     }
-//   };
+export const getAttendanceByUser = async (req, res) => {
+    try {
+        console.log("hiii")
+      const { userId } = req.body;
+      console.log(userId,"userId")
+    //   const userList = await AttendanceSchema.find({ user: userId }).populate(
+    //     "User"
+    //   );
+    const userList=await AttendanceSchema.find({user:userId})
+      return   res.json({ success: true, userList });
+    } catch (error) {
+      console.log(error);
+      return res.json({ success: false, error });
+    }
+  };
 
 
-//   export const editAttendance=async(req,res)=>{
-//     const { userId, productData } = req.body;
-//     console.log(userId, productData);
-//     try
-//     {
+  export const editAttendance=async(req,res)=>{
+    const { attendanceData,attendanceId, } = req.body;
+    console.log(attendanceId, attendanceData);
+    try
+    {
   
-//       const product = await ProductSchema.findByIdAndUpdate(
-//        {_id:productData._id},
-//        {
-//         $set:{
-//               name:productData.name,
-//               image:productData.image,
-//               category:productData.category,
-//               price:productData.price,
-//               quantity:productData.quantity
-  
-//         }
-//       },{
-//         new:true,
-//         useFindAndModify:false
-//       });
-//       console.log(product)
-//       if (!product) {
-//         return res.json({ success: false, message: "Product not found" });
-//       }
-//       console.log(product, "product");
-//       return res.json({
-//         success: true,
-//         message: "Product successfully updated.",
-//       });
+      const attendance = await AttendanceSchema.findByIdAndUpdate(
+       {_id:attendanceId},
+       {
+        $set:{
+              
+              sign_out_time:attendanceData.sign_out_time,
+              is_logged:attendanceData.is_logged
+             
+        }
+      },{
+        new:true,
+        useFindAndModify:false
+      });
+      console.log(attendance)
+      if (!attendance) {
+        return res.json({ success: false, message: "record not found" });
+      }
+      console.log(attendance, "attendance");
+      return res.json({
+        success: true,
+        message: "sign out successfully .",
+      });
        
-//     }
-//       catch(error) {
-//           res.status(400).json({
-//             error: error
-//           });
-//         }
-//     };
+    }
+      catch(error) {
+          res.status(400).json({
+            error: error
+          });
+        }
+    };

@@ -16,6 +16,7 @@ const Register = () => {
         e.preventDefault()
         if(userdata.username && userdata.email && userdata.password)
             {
+                console.log("submit method")
                  try {
                     
                      const response=await axios.post("http://localhost:5000/api/auth/register",{userdata})
@@ -24,6 +25,9 @@ const Register = () => {
                             alert(response.data.message)
                             setUserdata({username:"",password:"",email:"",phone_no:""})
                             router('/login')
+                        }
+                        else{
+                            alert(response.data)
                         }
                  } catch (error) {
                     alert(error)

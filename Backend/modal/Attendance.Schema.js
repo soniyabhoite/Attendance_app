@@ -3,9 +3,9 @@ import mongoose,{Schema} from "mongoose";
 var attendanceSchema=new Schema({
 
    sign_in_date:{
-             type:Date,
+             type:String,
              required:false,
-             default:() => new Date().toISOString().split('T')[0]
+            
       },
       sign_in_time:{
         type:String,

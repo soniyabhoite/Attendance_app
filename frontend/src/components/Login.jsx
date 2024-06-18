@@ -23,7 +23,7 @@ const Login = () => {
             {
                 router('/admin')
             }
-        if (loginData.email && loginData.password) {
+        else if (loginData.email && loginData.password) {
             try {
                 const response = await axios.post('http://localhost:5000/api/auth/login', { loginData })
               

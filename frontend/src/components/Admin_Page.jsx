@@ -1,17 +1,22 @@
 import React,{useState,useEffect} from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const Admin_Page = () => {
     const[ userList ,setuserList]=useState([])
-    
+
+     const router=useNavigate();
     useEffect(() => {
        async function getUser(){
     try {
              const response=await axios.get("http://localhost:5000/api/auth/getUser")
              if(response.data.success)
             {
-                setuserList(response.data.user)
+                all(response.data.user)
                 console.log(userList)
+            }
+            else{
+               alert(response.data)
             }
     
         } catch (error) {
@@ -24,44 +29,58 @@ const Admin_Page = () => {
        }
        getUser()
     });
-  
+
+     async function Routing(id){
+     router(`/single-user/${id}`); //template parsing ${}
+    }
+    function all(u)
+    {
+      setuserList(u)
+    }
+    var userid=localStorage.getItem("userId")
+    function logout(){
+      localStorage.setItem("userId","")
+      localStorage.removeItem("userId")
+      router('/')
+    }
+
+    async function singleUser(id)
+    { 
+      console.log(id)
+
+      router(`/single-user/${id}`);
+       
+    }
+    
   return (
-    <div className='mx-auto bg-light  shadow-lg pb-3 mb-5 bg-body rounded' id='login'>
-         <div className=" d-flex col float-end  my-4  " >
-             
-          
-             <div className="d-flex">
-               
-               
-                <p className="top-t mx-3"></p>
-             </div>
-            
-           
+    <div className='mx-auto bg-light  shadow-lg pb-3 mb-5 mt-5 bg-body rounded' id='user'>
          
-          </div>
              <br/>
-             <h2 className='mt-4'>User </h2><br/>
+             <h2 className='mt-4'>All Users </h2><br/>
              <br/>
-             {userList?.length? <div className='row row-cols-1 row-cols-md-3 g-4' style={{display:'flex',flexWrap:'wrap',justifyContent:'space-around'}}>
+             {userList?.length? <div className='col' >
  
             
                   {userList.map((user)=>(
                     
-                       <div className='card'   style={{cursor:'pointer' ,width:"25%"}}>
-                   
-                      <div className='card-body'>
+                       <div className='card mt-2'   style={{cursor:'pointer' ,width:"40%"}}>
+                     
+                      <div className='card-body' onClick={()=>singleUser(user?._id)}>
                       <h4 className='card-title'>{user.username}</h4>
+                     
                     
                      </div> 
-                     <div class="card-footer">
-                     {/* <button class="btn btn-primary pr-6" onClick={() => router(`/single-user/${user._id}`)}>View Attendance</button> */}
                     
-                     </div>
                     </div>
          
  
                  ))} 
                
+               <div className="mt-5">
+              
+                <input type="button" value="Logout" onClick={logout}  className='btn btn-success rounded'/>
+           
+            </div>
                  </div>:
                  <div>Loading...</div>
                   }
